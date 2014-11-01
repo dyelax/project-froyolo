@@ -17,9 +17,12 @@ class PostsController < ApplicationController
     end
     
     @posts.each do |p|
-      p.importance = 100 * (1 - Math.exp( -1 * p.score / sum_importance * Math.exp(1)) )
-    end
-    
+      if p.score < 1
+        p.importance = 0
+      else
+        p.importance = 100 * (1.0 - Math.exp( -1 * (1.0 * p.score) / sum_importance * Math.exp(1))) 
+      end
+    end  
   end
   
 
