@@ -12,17 +12,23 @@ class PostsController < ApplicationController
   def find_importance
     @posts = Post.all
     sum_importance = 0
+    
     @posts.each do |p|
-      sum_importance += p.score
+      p.age = (Time.zone.now - p.created_at) / 3600
     end
     
     @posts.each do |p|
-      if p.score < 1
+      sum_importance += (3 + p.score - p.age)
+    end
+    
+    @posts.each do |p|
+      if p.score - p.age < -2
         p.importance = 0
       else
-        p.importance = 100 * (1.0 - Math.exp( -1 * (1.0 * p.score) / sum_importance * Math.exp(1))) 
+        p.importance = 100 / 93.41 * (1.0 - Math.exp( -1 * (3.0 + p.score - p.age) / sum_importance * Math.exp(1))) 
       end
     end  
+    @posts
   end
   
 
