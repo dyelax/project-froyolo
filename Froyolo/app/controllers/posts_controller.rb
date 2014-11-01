@@ -1,15 +1,33 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  respond_to :json
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.all
   end
 
+  def filter
+  end
+
+  def filter_results
+
+    @posts = Post.where("xcoord > ?", search_params[:minx]).where("xcoord < ?", search_params[:maxx])
+    @posts = @posts.where("ycoord > ?", search_params[:miny]).where("ycoord < ?", search_params[:maxy])
+
+  end
+
+
   # GET /posts/1
   # GET /posts/1.json
   def show
+
+  end
+
+  def show_all
+    @posts = Post.all
+    @post = Post.first
   end
 
   # GET /posts/new
@@ -29,7 +47,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+        format.json { render json: @post }
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -62,13 +80,17 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:xcoord, :ycoord, :altitude, :horizontalaccuracy, :verticalaccuracy)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def post_params
+    params.require(:post).permit(:xcoord, :ycoord, :altitude, :horizontalaccuracy, :verticalaccuracy, :image)
+  end
+
+  def search_params
+    params.permit(:minx, :maxx, :miny, :maxy)
+  end
 end

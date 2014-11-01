@@ -1,0 +1,8 @@
+accomplished:
+
+1) can now create post objects via JSON POST request
+2) can retrieve list of all posts given certain coordinate boundaries (provides encoded base64 image data)
+
+TODO:
+-include up/down score in data model
+-update posts to reflect up/down score

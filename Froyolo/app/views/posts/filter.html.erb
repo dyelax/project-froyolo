@@ -1,0 +1,11 @@
+<%= form_tag(filter_results_path(format: "json"), method: "post", id: "search-form") do %>
+<%= label_tag "Min X-Coord" %>
+<%= text_field_tag :minx, nil, placeholder: "Search posts" %><br>
+<%= label_tag "Max X-Coord" %>
+<%= text_field_tag :maxx, nil, placeholder: "Search posts" %><br>
+<%= label_tag "Min Y-Coord" %>
+<%= text_field_tag :miny, nil, placeholder: "Search posts" %><br>
+<%= label_tag "Max Y-Coord" %>
+<%= text_field_tag :maxy, nil, placeholder: "Search posts" %><br>
+<%= submit_tag "Search", name: nil %>
+<% end %>
