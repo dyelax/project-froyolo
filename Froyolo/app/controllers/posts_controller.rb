@@ -9,7 +9,14 @@ class PostsController < ApplicationController
   end
   
   def find_importance
+    sum_importance = 0
+    @posts.each do |p|
+      sum_importance += p.score
+    end
     
+    @posts.each do |p|
+      p.importance = 100 * (1 - Math.exp( -1 * p.score / sum_importance ) )
+    end
   end
   
 
