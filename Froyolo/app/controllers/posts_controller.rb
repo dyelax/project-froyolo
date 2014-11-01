@@ -22,7 +22,6 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-
   end
 
   def show_all
@@ -43,11 +42,17 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-
+    
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render json: @post }
+        format.html {
+          Votecount.create(netvotes: 0, post: @post)
+          redirect_to @post, notice: 'Post was successfully created.' 
+          }
+        format.json {
+          Votecount.create(netvotes: 0, post: @post)
+          render json: @post 
+          }
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
