@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141101160601) do
+ActiveRecord::Schema.define(version: 20141101172244) do
 
   create_table "posts", force: true do |t|
     t.decimal  "xcoord"
@@ -22,13 +22,7 @@ ActiveRecord::Schema.define(version: 20141101160601) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
-  end
-
-  create_table "votecounts", force: true do |t|
-    t.integer  "netvotes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "post_id"
+    t.integer  "score"
   end
 
 end

@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   
   get 'filter' => 'posts#filter'
   post 'filter_results' => 'posts#filter_results'
+  
+  post 'increment' => 'posts#increment'
+  post 'decrement' => 'posts#decrement'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

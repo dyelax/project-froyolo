@@ -7,6 +7,52 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
   end
+  
+  def find_importance
+    
+  end
+  
+
+  #POST /increment/1.json
+  def increment
+    @post = Post.find(change_votes_params[:post_id])
+    @post.score = @post.score + 1
+
+
+    respond_to do |format|
+      if @post.save
+        format.html {
+          redirect_to @post, notice: 'Post was successfully updated.' 
+          }
+        format.json {
+          render json: @post 
+          }
+      else
+        format.html { render :new }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  #POST /decrement/1.json
+  def decrement
+    @post = Post.find(change_votes_params[:post_id])
+    @post.score = @post.score - 1
+    respond_to do |format|
+      if @post.save
+        format.html {
+          redirect_to @post, notice: 'Post was successfully updated.' 
+          }
+        format.json {
+          render json: @post 
+          }
+      else
+        format.html { render :new }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   def filter
   end
@@ -24,10 +70,10 @@ class PostsController < ApplicationController
   def show
   end
 
-  def show_all
-    @posts = Post.all
-    @post = Post.first
-  end
+  #def show_all
+  #  @posts = Post.all
+  #  @post = Post.first
+  #end
 
   # GET /posts/new
   def new
@@ -42,15 +88,14 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-    
+    @post.score = 0
+
     respond_to do |format|
       if @post.save
         format.html {
-          Votecount.create(netvotes: 0, post: @post)
           redirect_to @post, notice: 'Post was successfully created.' 
           }
         format.json {
-          Votecount.create(netvotes: 0, post: @post)
           render json: @post 
           }
       else
@@ -98,4 +143,9 @@ class PostsController < ApplicationController
   def search_params
     params.permit(:minx, :maxx, :miny, :maxy)
   end
+
+  def change_votes_params
+    params.permit(:post_id)
+  end
+
 end

@@ -27,5 +27,23 @@
   <%= @post.verticalaccuracy %>
 </p>
 
+<p>
+  <strong>Score:</strong>
+  <%= @post.score %>
+</p>
+
+<%= form_tag(increment_path(format: "json"), method: "post", id: "search-form") do %>
+<%= label_tag "Post ID" %>
+<%= text_field_tag :post_id, @post.id, placeholder: @post.id %><br>
+<%= submit_tag "Increment", name: nil %>
+<% end %>
+
+<%= form_tag(decrement_path(format: "json"), method: "post", id: "search-form") do %>
+<%= label_tag "Post ID" %>
+<%= text_field_tag :post_id, @post.id, placeholder: @post.id %><br>
+<%= submit_tag "Decrement", name: nil %>
+<% end %>
+
+
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>

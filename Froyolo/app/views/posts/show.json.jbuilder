@@ -1,5 +1,4 @@
 require 'open-uri'
-json.extract! @post, :id, :xcoord, :ycoord, :altitude, :horizontalaccuracy, :verticalaccuracy, :created_at, :updated_at
-json.score @post.votecount.netvotes
+json.extract! @post, :id, :xcoord, :ycoord, :altitude, :horizontalaccuracy, :verticalaccuracy, :created_at, :updated_at, :score
 json.imagedata Base64.encode64(File.open(@post.image.path).read)
 

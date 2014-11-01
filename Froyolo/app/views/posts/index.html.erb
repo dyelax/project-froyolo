@@ -15,20 +15,17 @@
 
   <tbody>
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.xcoord %></td>
-        <td><%= post.ycoord %></td>
-        <td><%= post.altitude %></td>
-        <td><%= post.horizontalaccuracy %></td>
-        <td><%= post.verticalaccuracy %></td>
-        <td><%= post.votecount.netvotes %></td>
-        <td>
-          <%= %>
-        </td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td><%= post.xcoord %></td>
+      <td><%= post.ycoord %></td>
+      <td><%= post.altitude %></td>
+      <td><%= post.horizontalaccuracy %></td>
+      <td><%= post.verticalaccuracy %></td>
+      <td><%= post.score %></td>
+      <td><%= link_to 'Show', post %></td>
+      <td><%= link_to 'Edit', edit_post_path(post) %></td>
+      <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>
