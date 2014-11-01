@@ -3,4 +3,5 @@ class Post < ActiveRecord::Base
   
   class_attribute :importance 
   class_attribute :age
+  class_attribute :ageadjustedscore
 end

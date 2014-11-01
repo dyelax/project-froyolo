@@ -10,22 +10,33 @@ class PostsController < ApplicationController
   end
   
   def find_importance
+    lowest_possible_value = -3
     @posts = Post.all
     sum_importance = 0
+    totalage = 0
     
     @posts.each do |p|
-      p.age = (Time.zone.now - p.created_at) / 3600
+      p.age = (Time.zone.now - p.created_at) / 3600 
+      totalage += p.age
     end
     
     @posts.each do |p|
-      sum_importance += (3 + p.score - p.age)
+      if p.age / totalage > 0.5
+        p.ageadjustedscore = p.score - p.age * 2.0
+      else
+        p.ageadjustedscore = p.score - p.age / 2.0
+      end
     end
     
     @posts.each do |p|
-      if p.score - p.age < -2
+      sum_importance += (p.ageadjustedscore - lowest_possible_value)
+    end
+    
+    @posts.each do |p|
+      if p.ageadjustedscore < lowest_possible_value + 1
         p.importance = 0
       else
-        p.importance = 100 / 93.41 * (1.0 - Math.exp( -1 * (3.0 + p.score - p.age) / sum_importance * Math.exp(1))) 
+        p.importance = 100 / 93.41 * (1.0 - Math.exp( -1 * (-1.0 * lowest_possible_value + p.ageadjustedscore) / sum_importance * Math.exp(1))) 
       end
     end  
     @posts
