@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post 'increment' => 'posts#increment'
   post 'decrement' => 'posts#decrement'
   
+  get 'find_importance' => 'posts#find_importance'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

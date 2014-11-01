@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+  
+  
   respond_to :json
   # GET /posts
   # GET /posts.json
@@ -9,14 +10,16 @@ class PostsController < ApplicationController
   end
   
   def find_importance
+    @posts = Post.all
     sum_importance = 0
     @posts.each do |p|
       sum_importance += p.score
     end
     
     @posts.each do |p|
-      p.importance = 100 * (1 - Math.exp( -1 * p.score / sum_importance ) )
+      p.importance = 100 * (1 - Math.exp( -1 * p.score / sum_importance * Math.exp(1)) )
     end
+    
   end
   
 
