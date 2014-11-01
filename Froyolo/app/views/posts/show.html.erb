@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Xcoord:</strong>
+  <%= @post.xcoord %>
+</p>
+
+<p>
+  <strong>Ycoord:</strong>
+  <%= @post.ycoord %>
+</p>
+
+<p>
+  <strong>Altitude:</strong>
+  <%= @post.altitude %>
+</p>
+
+<p>
+  <strong>Horizontalaccuracy:</strong>
+  <%= @post.horizontalaccuracy %>
+</p>
+
+<p>
+  <strong>Verticalaccuracy:</strong>
+  <%= @post.verticalaccuracy %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>

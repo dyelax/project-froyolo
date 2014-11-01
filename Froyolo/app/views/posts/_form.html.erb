@@ -1,0 +1,37 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :xcoord %><br>
+    <%= f.text_field :xcoord %>
+  </div>
+  <div class="field">
+    <%= f.label :ycoord %><br>
+    <%= f.text_field :ycoord %>
+  </div>
+  <div class="field">
+    <%= f.label :altitude %><br>
+    <%= f.text_field :altitude %>
+  </div>
+  <div class="field">
+    <%= f.label :horizontalaccuracy %><br>
+    <%= f.text_field :horizontalaccuracy %>
+  </div>
+  <div class="field">
+    <%= f.label :verticalaccuracy %><br>
+    <%= f.text_field :verticalaccuracy %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

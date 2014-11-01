@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  xcoord: 
+  ycoord: 
+  altitude: 
+  horizontalaccuracy: 
+  verticalaccuracy: 
+
+two:
+  xcoord: 
+  ycoord: 
+  altitude: 
+  horizontalaccuracy: 
+  verticalaccuracy: 
