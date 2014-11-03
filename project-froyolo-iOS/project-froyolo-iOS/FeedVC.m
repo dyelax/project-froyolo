@@ -12,28 +12,51 @@
 #import "CLLocation+Bearing.h"
 #import "NSString+TimeSince.h"
 #import "LocationService.h"
+#import "ServerCommunicator.h"
 
 @interface FeedVC ()
 
 @end
 
-@implementation FeedVC
+@implementation FeedVC{
+//    ServerCommunicator *sc;
+    UIRefreshControl *refreshControl;
+}
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)awakeFromNib{
+//    sc = [[ServerCommunicator alloc]init];
+    
     self.posts = [[NSMutableArray alloc] init];
     
     for (int i = 0; i<20; i++) {
         [self.posts addObject: [[Post alloc] init]];
     }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+//    self.posts = [[NSMutableArray alloc] init];
+//    
+//    for (int i = 0; i<20; i++) {
+//        [self.posts addObject: [[Post alloc] init]];
+//    }
     
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]init];
-    [refreshControl setBackgroundColor:[UIColor colorWithRed:93.0/255 green:36.0/255 blue:249.0/255 alpha:1]];
-    [refreshControl setTintColor:[UIColor whiteColor]];
+    refreshControl = [[UIRefreshControl alloc]init];
+    [refreshControl setBackgroundColor:[UIColor whiteColor]];
+    [refreshControl setTintColor:[UIColor colorWithRed:93.0/255 green:36.0/255 blue:249.0/255 alpha:1]];
     
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    NSLog(@"Feed Appear");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"displayingView" object:nil userInfo:@{@"VC" : self}];
+                                                                                                       
+//    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +77,18 @@
 #pragma mark - Server
 
 - (void)loadData{
-    
+    struct CoordBounds cb;
+    cb.minLat = -100;
+    cb.maxLat = 100;
+    cb.minLon = -100;
+    cb.maxLon = 100;
+    [[ServerCommunicator sharedInstance] retrievePostsInBounds:cb];
+}
+
+- (void)updatePosts:(NSArray *)posts{
+    [self setPosts:[NSMutableArray arrayWithArray:posts]];
+    [self.tableView reloadData];
+    [refreshControl endRefreshing];
 }
 
 
@@ -62,6 +96,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{    
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    [cell setSeparatorInset:UIEdgeInsetsMake(100, 1000, 100, 1000)];//should get rid of seperator.
     
     [cell updateWithPost:self.posts[indexPath.row]];
 

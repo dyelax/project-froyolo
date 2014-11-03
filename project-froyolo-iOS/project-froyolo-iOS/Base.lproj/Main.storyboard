@@ -37,11 +37,26 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B2T-MA-7eB">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8R-X9-TEa">
+                                <rect key="frame" x="16" y="28" width="27" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="27" id="1Gf-Jx-uQk"/>
+                                    <constraint firstAttribute="height" constant="25" id="FmY-2z-Njg"/>
+                                </constraints>
+                                <state key="normal" image="camera-ToolBarIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cameraPressed:" destination="SUg-bt-twd" eventType="touchUpInside" id="fJN-SL-XVl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="B2T-MA-7eB" firstAttribute="leading" secondItem="B8R-X9-TEa" secondAttribute="trailing" constant="-43" id="Bor-ZF-dC9"/>
                             <constraint firstItem="s3K-bI-duS" firstAttribute="top" secondItem="B2T-MA-7eB" secondAttribute="bottom" id="H7n-2e-zMM"/>
                             <constraint firstItem="B2T-MA-7eB" firstAttribute="leading" secondItem="gRX-Ly-x3D" secondAttribute="leading" id="QBp-cu-11n"/>
+                            <constraint firstItem="B8R-X9-TEa" firstAttribute="top" secondItem="yyL-yC-3Zc" secondAttribute="bottom" constant="8" id="bfd-YB-yaz"/>
                             <constraint firstAttribute="trailing" secondItem="B2T-MA-7eB" secondAttribute="trailing" id="fFI-Dj-elE"/>
                             <constraint firstItem="B2T-MA-7eB" firstAttribute="top" secondItem="gRX-Ly-x3D" secondAttribute="top" id="nwg-ji-EO3"/>
                         </constraints>
@@ -192,7 +207,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Feed" id="8QP-vx-wsH">
-                        <barButtonItem key="rightBarButtonItem" image="camera-ToolBarIcon" id="NIN-DF-At0">
+                        <barButtonItem key="leftBarButtonItem" image="camera-ToolBarIcon" id="NIN-DF-At0">
                             <color key="tintColor" red="0.36470588235294116" green="0.14901960784313725" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cameraPressed:" destination="je1-4r-HXL" id="RpB-Xq-GEW"/>

@@ -10,6 +10,10 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
+@property NSArray *masterPosts;
+
 @property NSArray *viewControllers;
+
+@property UIViewController *displayingVC;
 
 @end

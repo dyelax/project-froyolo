@@ -17,11 +17,16 @@ typedef enum PostVote : NSInteger{
 
 @interface Post : NSObject
 
+@property NSNumber *ID;
 @property NSDate *timeStamp;
 @property CLLocation *location;
 @property int score;
 @property UIImage *image;
+@property double importance;
 
 @property CommentVote currentUserVote;
+
+
+- (NSData *)getJSONData;
 
 @end

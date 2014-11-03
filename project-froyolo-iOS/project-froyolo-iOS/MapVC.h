@@ -9,8 +9,29 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MapVC : UIViewController
+@protocol MapDelegate <NSObject>
+
+@required
+- (void)cameraShouldOpen;
+
+@end
+
+@interface MapVC : UIViewController <MKMapViewDelegate>
+
+@property NSMutableArray *posts;
+
+
+@property (weak, nonatomic) id<MapDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+- (IBAction)cameraPressed:(id)sender;
+
+#pragma mark - Overlay
+
+- (void)updatePosts:(NSMutableArray *)posts;
+- (void)loadPostsInRadius:(double)r aroundCoord:(CLLocationCoordinate2D)coord;
+
+- (void)addOverlayWithImage:(UIImage *)image atCoord:(CLLocationCoordinate2D)coord bounds:(MKMapRect)bounds;
 
 @end

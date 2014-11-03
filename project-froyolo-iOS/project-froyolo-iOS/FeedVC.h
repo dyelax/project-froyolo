@@ -20,9 +20,13 @@
 
 @property (weak, nonatomic) id<FeedDelegate> delegate;
 
+- (void)updatePosts:(NSArray *)posts;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *posts;
 
+
+- (void)loadData;
 
 - (IBAction)cameraPressed:(id)sender;
 

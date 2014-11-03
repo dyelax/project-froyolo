@@ -22,7 +22,6 @@
         mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
         UINavigationController *feedNC = [mainStoryboard instantiateViewControllerWithIdentifier:@"feedNC"];
-//        FeedVC *feedVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"feed"];
         MapVC *mapVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"map"];
         
         self.viewControllers = @[feedNC, mapVC];
@@ -34,10 +33,22 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
+//    self.displayingVC = viewController;
+//    if ([self.displayingVC isKindOfClass:UINavigationController.class]) {
+//        FeedVC *feedVC = (FeedVC *)((UINavigationController *)self.displayingVC).topViewController;
+//        [feedVC loadData];
+//    }else if ([self.displayingVC isKindOfClass:MapVC.class]){
+//        MapVC *mapVC = (MapVC *)self.displayingVC;
+//        double radius = mapVC.mapView.region.span.latitudeDelta + 0.05;
+//        [mapVC loadPostsInRadius:radius aroundCoord:mapVC.mapView.centerCoordinate];
+//    }
+    
     NSUInteger index = [self.viewControllers indexOfObject:viewController];
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
+    
+//    self.displayingVC = viewController;
     
     index--;
     

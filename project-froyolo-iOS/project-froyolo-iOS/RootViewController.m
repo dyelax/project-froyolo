@@ -10,14 +10,26 @@
 #import "ExampleModelController.h"
 #import "ModelController.h"
 #import "LocationService.h"
+#import "Post.h"
 
 @implementation RootViewController{
+    ServerCommunicator *sc;
     ModelController *modelController;
+    UIViewController *displayingVC;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"displayingView" object:nil queue:nil usingBlock:^(NSNotification *note){
+        displayingVC = [note.userInfo objectForKey:@"VC"];
+        NSLog(@"displayingVC: %@", displayingVC);
+    }];
+    
+    
+//    sc = [[ServerCommunicator alloc]init];
+    [[ServerCommunicator sharedInstance] setDelegate:self];
     
     // Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
@@ -27,6 +39,11 @@
     
     UIViewController *startingViewController = modelController.viewControllers[1];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    MapVC *mapVC = (MapVC *)modelController.viewControllers[1];
+    [modelController setDisplayingVC:mapVC];
+    double radius = mapVC.mapView.region.span.latitudeDelta + 0.05;
+    [mapVC loadPostsInRadius:radius aroundCoord:mapVC.mapView.centerCoordinate];
 
     self.pageViewController.dataSource = modelController;
 
@@ -44,6 +61,7 @@
 //    }
     
     [(FeedVC *)((UINavigationController *)modelController.viewControllers[0]).viewControllers[0] setDelegate:self];
+    [(MapVC *)modelController.viewControllers[1] setDelegate:self];
     
     [[LocationService sharedInstance] startUpdatingLocation];
 }
@@ -93,7 +111,7 @@
 // For responding to the user tapping Cancel.
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
     
-    [[picker parentViewController] dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 // For responding to the user accepting a newly-captured picture or movie
@@ -121,18 +139,78 @@
 //        // Save the new image (original or edited) to the Camera Roll
 //        UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
         
+        //create new post
+        Post *newPost = [[Post alloc]init];
+        
+        [newPost setTimeStamp:[NSDate date]];
+        [newPost setLocation:[LocationService sharedInstance].currentLocation];
+        [newPost setScore:0];
+        [newPost setImage:imageToSave];
+        [newPost setCurrentUserVote:PostVoteNone];
+        
         //send to server
+        [[ServerCommunicator sharedInstance] addPost:newPost];
+//        NSLog(@"%@", [self encodeToBase64String:imageToSave]);
+
         //post to feed
+        FeedVC *feedVC = (FeedVC *)((UINavigationController *)modelController.viewControllers[0]).viewControllers[0];
+        
+        [feedVC.posts insertObject:newPost atIndex:0];
+        
+        [feedVC.tableView reloadData];
+        
+//        gcd_crea
+        
+//        UIViewController *displayingVC = modelController.displayingVC;
+//        if ([displayingVC isKindOfClass:FeedVC.class]) {
+//            FeedVC *feedVC = (FeedVC *)displayingVC;
+//            [feedVC loadData];
+//        }else if ([displayingVC isKindOfClass:MapVC.class]){
+//            MapVC *mapVC = (MapVC *)displayingVC;
+//            double radius = mapVC.mapView.region.span.latitudeDelta + 0.05;
+//            [mapVC loadPostsInRadius:radius aroundCoord:mapVC.mapView.centerCoordinate];
+//        }
+
+        
         //YAY MESSAGE!!!!
     }
     
-    [[picker parentViewController] dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
+//- (NSString *)encodeToBase64String:(UIImage *)image {
+//    return [UIImageJPEGRepresentation(image, .1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+//}
 
 #pragma mark - FeedDelegate
 
 - (void)cameraShouldOpen{
     [self startCameraControllerFromViewController:self usingDelegate:self];
+}
+
+#pragma mark - ServerCommunicatorDelegate
+
+- (void)receivalDidCompleteSuccussfully:(NSArray *)posts{
+    NSLog(@"posts: %@", posts);
+    
+    [modelController setMasterPosts:posts];
+    
+//    UIViewController *displayingVC = [self topViewController];
+    
+//    if ([displayingVC isKindOfClass:UINavigationController.class]) {
+//        FeedVC *feedVC = (FeedVC *)((UINavigationController *)displayingVC).topViewController;
+//        [feedVC updatePosts:posts];
+//    }else if ([displayingVC isKindOfClass:MapVC.class]){
+//        [((MapVC *)displayingVC) updatePosts:[NSMutableArray arrayWithArray:posts]];
+//    }
+    
+//    NSLog(@"displayingVC: %@", displayingVC);
+    
+    if ([displayingVC isKindOfClass:FeedVC.class]) {
+        FeedVC *feedVC = (FeedVC *)displayingVC;
+        [feedVC updatePosts:posts];
+    }else if ([displayingVC isKindOfClass:MapVC.class]){
+        [((MapVC *)displayingVC) updatePosts:[NSMutableArray arrayWithArray:posts]];
+    }
 }
 
 @end

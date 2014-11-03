@@ -39,7 +39,7 @@
     NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date  toDate:nowDate  options:0];
     
     if (interval < min) {
-        return @"Just Now";
+        return @"Just now";
     }else if (interval < hour){
         return [NSString stringWithFormat:@"%lim", (long)breakdownInfo.minute];
     }else if (interval < day){

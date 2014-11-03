@@ -10,6 +10,7 @@
 #import "LocationService.h"
 #import "CLLocation+Bearing.h"
 #import "NSString+TimeSince.h"
+#import "ServerCommunicator.h"
 
 @implementation FeedCell{
     UITapGestureRecognizer *tapGR;
@@ -39,9 +40,13 @@
     CLLocation *currentLocation = [LocationService sharedInstance].currentLocation;
     
     double distance = [self.post.location distanceFromLocation:currentLocation] / 1609.34;
-    NSString *heading = [currentLocation compassOrdinalToLocation:self.post.location];
+    if (distance >= 0.1) {
+        NSString *heading = [currentLocation compassOrdinalToLocation:self.post.location];
+        [self.locationLabel setText:[NSString stringWithFormat:@"%.01fmi %@", distance, heading]];
+    }else{
+        [self.locationLabel setText:@"Right here"];
+    }
     
-    [self.locationLabel setText:[NSString stringWithFormat:@"%.01f %@", distance, heading]];
     [self.timeLabel setText:[NSString dynamicTimeIntervalStringToNowFromDate: self.post.timeStamp]];
     [self.scoreLabel setText:[NSString stringWithFormat:@"%i", self.post.score]];
     [self.photoImageView setImage:self.post.image];
@@ -73,38 +78,45 @@
 - (IBAction)upvote:(UIButton *)sender {
     if (self.post.currentUserVote == PostVoteUp) {
         self.post.score--;
+        [[ServerCommunicator sharedInstance] decrementPost:self.post];
         [self.post setCurrentUserVote:PostVoteNone];
     }else{
         self.post.score++;
+        [[ServerCommunicator sharedInstance] incrementPost:self.post];
         if (self.post.currentUserVote == PostVoteDown) {
             self.post.score++;//extra point added because we're getting rid of the downvote too.
+            [[ServerCommunicator sharedInstance] incrementPost:self.post];
         }
         
         [self.post setCurrentUserVote:PostVoteUp];
     }
     [self updateVoteUI];
     
-    //??? update server with vote
+    [[ServerCommunicator sharedInstance] incrementPost:self.post];
 }
 - (IBAction)downvote:(UIButton *)sender {
     if (self.post.currentUserVote == PostVoteDown) {
         [self.post setCurrentUserVote:PostVoteNone];
         self.post.score++;
+        [[ServerCommunicator sharedInstance] incrementPost:self.post];
     }else{
         self.post.score--;
+        [[ServerCommunicator sharedInstance] decrementPost:self.post];
         if (self.post.currentUserVote == PostVoteUp) {
             self.post.score--;//extra point subtracted because we're getting rid of the downvote too.
+            [[ServerCommunicator sharedInstance] decrementPost:self.post];
         }
         
         [self.post setCurrentUserVote:PostVoteDown];
     }
     [self updateVoteUI];
     
-    //??? update server with vote
+    [[ServerCommunicator sharedInstance] decrementPost:self.post];
 }
 
 - (void)viewPhoto:(UITapGestureRecognizer *)sender{
     NSLog(@"VIEW!");
+    [self.post getJSONData];
 }
 
 @end

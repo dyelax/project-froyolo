@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "FeedVC.h"
+#import "MapVC.h"
+#import "ServerCommunicator.h"
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FeedDelegate>
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FeedDelegate, MapDelegate, ServerCommunicatorDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 

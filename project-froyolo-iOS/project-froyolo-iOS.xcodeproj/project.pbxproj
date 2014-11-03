@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C9114DB31A05505300306902 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = C9114DB21A05505300306902 /* LocationService.m */; };
+		C9114DB71A05B79500306902 /* ImageOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9114DB61A05B79500306902 /* ImageOverlay.m */; };
+		C9114DBA1A05B8AD00306902 /* ImageOverlayRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9114DB91A05B8AD00306902 /* ImageOverlayRenderer.m */; };
+		C9114DBE1A05DD8D00306902 /* ServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = C9114DBD1A05DD8D00306902 /* ServerCommunicator.m */; };
 		C97BD19A1A04767000CE32FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BD1991A04767000CE32FC /* main.m */; };
 		C97BD19D1A04767000CE32FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BD19C1A04767000CE32FC /* AppDelegate.m */; };
 		C97BD1A01A04767000CE32FC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BD19F1A04767000CE32FC /* RootViewController.m */; };
@@ -46,6 +49,12 @@
 /* Begin PBXFileReference section */
 		C9114DB11A05505300306902 /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
 		C9114DB21A05505300306902 /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
+		C9114DB51A05B79500306902 /* ImageOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageOverlay.h; sourceTree = "<group>"; };
+		C9114DB61A05B79500306902 /* ImageOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageOverlay.m; sourceTree = "<group>"; };
+		C9114DB81A05B8AD00306902 /* ImageOverlayRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageOverlayRenderer.h; sourceTree = "<group>"; };
+		C9114DB91A05B8AD00306902 /* ImageOverlayRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageOverlayRenderer.m; sourceTree = "<group>"; };
+		C9114DBC1A05DD8D00306902 /* ServerCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicator.h; sourceTree = "<group>"; };
+		C9114DBD1A05DD8D00306902 /* ServerCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunicator.m; sourceTree = "<group>"; };
 		C97BD1941A04767000CE32FC /* project-froyolo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-froyolo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97BD1981A04767000CE32FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C97BD1991A04767000CE32FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -111,6 +120,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9114DB41A05B76C00306902 /* Map Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				C9114DB51A05B79500306902 /* ImageOverlay.h */,
+				C9114DB61A05B79500306902 /* ImageOverlay.m */,
+				C9114DB81A05B8AD00306902 /* ImageOverlayRenderer.h */,
+				C9114DB91A05B8AD00306902 /* ImageOverlayRenderer.m */,
+			);
+			name = "Map Overlay";
+			sourceTree = "<group>";
+		};
+		C9114DBB1A05DD3900306902 /* Communications */ = {
+			isa = PBXGroup;
+			children = (
+				C9114DBC1A05DD8D00306902 /* ServerCommunicator.h */,
+				C9114DBD1A05DD8D00306902 /* ServerCommunicator.m */,
+			);
+			name = Communications;
+			sourceTree = "<group>";
+		};
 		C97BD18B1A04767000CE32FC = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +163,8 @@
 		C97BD1961A04767000CE32FC /* project-froyolo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				C9114DBB1A05DD3900306902 /* Communications */,
+				C9114DB41A05B76C00306902 /* Map Overlay */,
 				C97BD2231A0510BB00CE32FC /* Helpers */,
 				C97BD1C51A04787600CE32FC /* Controller */,
 				C97BD1C41A04786E00CE32FC /* View */,
@@ -350,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9114DBE1A05DD8D00306902 /* ServerCommunicator.m in Sources */,
 				C97BD1DA1A04793700CE32FC /* GreenViewController.m in Sources */,
 				C97BD1EB1A04B08000CE32FC /* FeedCell.m in Sources */,
 				C97BD1A31A04767000CE32FC /* DataViewController.m in Sources */,
@@ -363,7 +395,9 @@
 				C97BD2341A053CB800CE32FC /* NSString+TimeSince.m in Sources */,
 				C97BD1DD1A047AF000CE32FC /* ColorModelVC.m in Sources */,
 				C97BD2311A0537DE00CE32FC /* CLLocation+Bearing.m in Sources */,
+				C9114DBA1A05B8AD00306902 /* ImageOverlayRenderer.m in Sources */,
 				C97BD22C1A052BDB00CE32FC /* Post.m in Sources */,
+				C9114DB71A05B79500306902 /* ImageOverlay.m in Sources */,
 				C97BD1E21A04894E00CE32FC /* ModelController.m in Sources */,
 				C97BD1E81A048A9900CE32FC /* MapVC.m in Sources */,
 				C97BD19A1A04767000CE32FC /* main.m in Sources */,
