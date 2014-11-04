@@ -1,4 +1,4 @@
-<%= form_for(@post, url: posts_path(format: "json")) do |f| %>
+<%= form_for(@post, format: :json) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -22,14 +22,6 @@
   <div class="field">
     <%= f.label :altitude %><br>
     <%= f.text_field :altitude %>
-  </div>
-  <div class="field">
-    <%= f.label :horizontalaccuracy %><br>
-    <%= f.text_field :horizontalaccuracy %>
-  </div>
-  <div class="field">
-    <%= f.label :verticalaccuracy %><br>
-    <%= f.text_field :verticalaccuracy %>
   </div>
 <div>
   <%= f.label :image %>

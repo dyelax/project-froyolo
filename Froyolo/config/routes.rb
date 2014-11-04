@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post 'increment' => 'posts#increment'
   post 'decrement' => 'posts#decrement'
   
+  post 'find_importance' => 'posts#find_importance'
   get 'find_importance' => 'posts#find_importance'
   
   # Example of regular route:

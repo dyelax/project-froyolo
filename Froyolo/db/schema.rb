@@ -11,18 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141101172244) do
+ActiveRecord::Schema.define(version: 20141102004623) do
 
   create_table "posts", force: true do |t|
     t.decimal  "xcoord"
     t.decimal  "ycoord"
     t.decimal  "altitude"
-    t.decimal  "horizontalaccuracy"
-    t.decimal  "verticalaccuracy"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
     t.integer  "score"
+    t.string   "imagedata"
   end
 
 end
