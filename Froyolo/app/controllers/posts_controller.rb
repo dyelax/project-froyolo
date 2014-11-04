@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   def find_importance
 
+
     @posts = Post.where("xcoord > ?", search_params[:minx]).where("xcoord < ?", search_params[:maxx])
     @posts = @posts.where("ycoord > ?", search_params[:miny]).where("ycoord < ?", search_params[:maxy])
 
@@ -34,15 +35,45 @@ class PostsController < ApplicationController
 
     @posts.each do |p|
       sum_importance += (p.ageadjustedscore - lowest_possible_value)
+    lowest_possible_value = -3
+    @posts = Post.all
+    sum_importance = 0
+    totalage = 0
+    
+    @posts.each do |p|
+      p.age = (Time.zone.now - p.created_at) / 3600 
+      totalage += p.age
+
     end
 
     @posts.each do |p|
+
       if p.ageadjustedscore < lowest_possible_value + 1
         p.importance = 0
       else
         p.importance = 100 / 93.41 * (1.0 - Math.exp( -1 * (-1.0 * lowest_possible_value + p.ageadjustedscore) / sum_importance * Math.exp(1)))
       end
     end
+
+      if p.age / totalage > 0.5
+        p.ageadjustedscore = p.score - p.age * 2.0
+      else
+        p.ageadjustedscore = p.score - p.age / 2.0
+      end
+    end
+    
+    @posts.each do |p|
+      sum_importance += (p.ageadjustedscore - lowest_possible_value)
+    end
+    
+    @posts.each do |p|
+      if p.ageadjustedscore < lowest_possible_value + 1
+        p.importance = 0
+      else
+        p.importance = 100 / 93.41 * (1.0 - Math.exp( -1 * (-1.0 * lowest_possible_value + p.ageadjustedscore) / sum_importance * Math.exp(1))) 
+      end
+    end  
+    @posts
   end
 
   #POST /increment/1.json
